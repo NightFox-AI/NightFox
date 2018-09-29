@@ -3,6 +3,8 @@ class Boardposs :
 		#self.a=[[0 for i in range(6,-1,-1)] for j in range(5,-1,-1)]
 		self.a=[[0 for i in range(0,7)] for j in range(0,6)]
 		#self.a[0][1]=1
+		print("The format is ")
+		print(" 0  1  2  3  4  5  6")
 		for i in range(0,6):
 			print(self.a[i])
 
@@ -17,7 +19,8 @@ class Boardposs :
 			elif(self.a[0][pos]==1):
 				print("Invalid")
 				break
-
+		print("\nThe format is ")
+		print(" 0  1  2  3  4  5  6")
 		for i in range(0,6):
 			print(self.a[i])
 	
@@ -57,7 +60,7 @@ class Boardposs :
 				#print("Pos ",pos," Row ",inserted_row)
 				pos_diag=pos
 				for i in range(inserted_row,-1,-1):	#45-degree diagonal right
-					if(self.a[i][pos_diag]==player):
+					if(self.a[i][pos_diag]==player and pos_diag<6):
 						pos_diag+=1
 						counter+=1
 						#print("hi")
