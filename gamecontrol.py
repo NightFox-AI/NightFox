@@ -8,16 +8,16 @@
 import time
 import arena
 import referee
+import gametree
 import boardpos
 import movemaker
-import threading
 import ga2.gaDisc as gad
 
 
 if(__name__ == "__main__"):
 
     # Details on training flags
-    NUM_OF_TRAINING_EPOCH = 10
+    NUM_OF_TRAINING_EPOCH = 100
 
 
     # Details on the ga2 agents
@@ -60,17 +60,32 @@ if(__name__ == "__main__"):
 
                 playerObj1 = sess.getAgent(player1ID)
                 playerObj2 = sess.getAgent(player2ID)
-
-                #gameTree = tree.tree()
                 
                 if(player1ID != player2ID):
 
-                    
-                    
-                    gameOver = False
-                    while(gameOver):
-                        pass
+                    # start of the game
+                    # initialise the variables
 
+                    gameOver = False
+                    gameTree = gametree.tree()
+                    board = boardpos.Boardpos()
+
+                    # make this 'not' gameOver when the sub-modules are working
+                    while(gameOver):
+                        
+                        move = movemaker.move(playerObj1, gameTree)
+                        playerObj1.fitness = referee.referee(move, playerObj1, gameTree)
+                        # gameOver = arena.change_vals(board, move, 1)
+
+                        
+                        if(not gameOver):
+                            move = movemaker.move(playerObj2, gameTree)
+                            playerObj2.fitness = referee.referee(move, playerObj2, gameTree)
+                            # gameOver = arena.change_vals(board, move, 2)
+                            
+                    sess.updateAgent(playerObj1)
+                    sess.updateAgent(playerObj2)
+                    
         trainEp += 1
         
         print("")
