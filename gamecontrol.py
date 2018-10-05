@@ -28,7 +28,8 @@ if(__name__ == "__main__"):
     MUTATION_RATE = 0.03
     GENE_COPY = 0.95
     GEN_MODE = 'A'
-
+    MODE = 'UNSAFE'
+    VAL_TYPE = 'FLOAT'
 
     # Initialisation of the modules
     sess = gad.Session(agentCount=NUMBER_OF_AGENTS,
@@ -37,7 +38,9 @@ if(__name__ == "__main__"):
                        genecopy=GENE_COPY,
                        survival=SURVIVAL_RATE,
                        mutation=MUTATION_RATE,
-                       generateMode=GEN_MODE)
+                       generateMode=GEN_MODE,
+                       mode=MODE,
+                       valType=VAL_TYPE)
 
     sess.init()
     
@@ -54,38 +57,19 @@ if(__name__ == "__main__"):
         currGen = sess.getAllAgents()
         for player1ID in currGen:
             for player2ID in currGen:
+
+                playerObj1 = sess.getAgent(player1ID)
+                playerObj2 = sess.getAgent(player2ID)
+
+                #gameTree = tree.tree()
                 
                 if(player1ID != player2ID):
+
                     
-                    # start the match here
-                    player1Obj = sess.getAgent(player1ID)
-                    player2Obj = sess.getAgent(player2ID)
-                    '''
-                    # initialise board
-                    board = boardpos.Boardpos()
-
-                    # send the board to movemaker
-                    movemaker.board = board
-                    movemaker.player1Obj = player1Obj
-                    movemaker.player2Obj = player2Obj
                     
-                    # let movemaker initialise its players
-                    moveMaker1 = movemaker.Player(0)
-                    moveMaker2 = movemaker.Player(1)
-
-                    moveMaker1.start()
-                    moveMaker2.start()
-
-                    moveMaker1.join()
-                    moveMaker2.join()        
-
-                    board = movemaker.board
-                    
-                    #player1Obj, player2Obj = referee.referee(board)
-                    '''
-                    sess.updateAgent(player1Obj)
-                    sess.updateAgent(player2Obj)
-        
+                    gameOver = False
+                    while(gameOver):
+                        pass
 
         trainEp += 1
         
