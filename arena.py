@@ -30,7 +30,7 @@ def check_for_win(bObj,pos,player):
 			break
 	if(counter>=4):
 		print("Player ",player," won : LEFT-RIGHT")
-		exit(0)
+		return True
 
 	else:
 		counter=0
@@ -42,7 +42,7 @@ def check_for_win(bObj,pos,player):
 
 		if(counter>=4):
 			print("Player ",player," won : UP-DOWN")
-			exit(0)
+			return True
 
 
 		else:
@@ -69,7 +69,7 @@ def check_for_win(bObj,pos,player):
 					break
 			if(counter>=4):
 				print("Player ",player," won : NEG_DIAG")
-				exit(0)
+				return True
 
 
 			else:
@@ -98,8 +98,8 @@ def check_for_win(bObj,pos,player):
 						break
 				if(counter>=4):
 					print("Player ",player," won : NEG_DIAG")
-					exit(0)
-
+					return True
+	return False
 
 
 if(__name__=="__main__"):
