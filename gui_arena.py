@@ -91,6 +91,8 @@ class Boardposs :
 		for i in range(5,-1,-1):
 			print(self.a[i])
 
+		print("current row ",self.inserted_row, " current pos ",self.pos)
+
 		#print("row 0",self.a[self.inserted_row])
 			#diagpnal1
 
@@ -121,83 +123,83 @@ class Boardposs :
 			#exit(0)
 			return True
 
-		#else:
-		counter=0
-		for i in range(self.inserted_row,6):	#up
-			if(self.a[i][self.pos]==self.player):
-				counter+=1
-			else:
-				break
-		for i in range(self.inserted_row-1,-1,-1):	#down
-			if(self.a[i][self.pos]==self.player):
-				counter+=1
-			else:
-				break
-		#print("verti counter:",counter)
-		if(counter>=4):
-			print("Player ",self.player," won : UP-DOWN")
-			#exit(0)
-			return True
-
 		else:
 			counter=0
-			#print("Pos ",pos," Row ",inserted_row)
-			pos_diag=self.pos
-			for i in range(self.inserted_row,-1,-1):	#45-degree diagonal right
-				if(pos_diag<7 and self.a[i][pos_diag]==self.player):
-					pos_diag+=1
+			for i in range(self.inserted_row,6):	#up
+				if(self.a[i][self.pos]==self.player):
 					counter+=1
-					#print("hi")
-					#print("45 deg",counter)
 				else:
 					break
-			#print("counter after 1st for loop",counter)
-			pos_diag=self.pos-1
-			for i in range(self.inserted_row+1,6):	#45-degree diagonal left
-				#print("row ",i," column ",pos_diag)
-
-				#print("pos_diag","player",self.a[i][pos_diag],self.player)
-				if(pos_diag>=0 and self.a[i][pos_diag]==self.player ):
-					pos_diag-=1
+			for i in range(self.inserted_row-1,-1,-1):	#down
+				if(self.a[i][self.pos]==self.player):
 					counter+=1
-					#print("45 deg",counter)
 				else:
 					break
-			
+			#print("verti counter:",counter)
 			if(counter>=4):
-				print("Player ",self.player," won : NEG_DIAG")
+				print("Player ",self.player," won : UP-DOWN")
 				#exit(0)
-				
 				return True
 
-				#else:
-			counter=0
-			#print("Pos ",pos," Row ",inserted_row)
-			pos_diag=self.pos
-			for i in range(self.inserted_row,-1,-1):	#135-degree diagonal left
-				if( pos_diag>=0 and self.a[i][pos_diag]==self.player):
-					pos_diag-=1
-					counter+=1
-					#print("hi")
-					#print("135",counter)
-				else:
-					break
-			#print("counter after 1st for loop",counter)
-			pos_diag=self.pos+1
-			for i in range(self.inserted_row+1,6):	#135-degree diagonal right
-				#print("row ",i," column ",pos_diag)
-				if(pos_diag<7 and  self.a[i][pos_diag]==self.player ):
-					pos_diag+=1
-					counter+=1
-					#print("135",counter)
-				else:
-					break
-			#print("135 deg",counter)
-			if(counter>=4):
-				print("Player ",self.player," won : NEG_DIAG")
-				#exit(0)
+			else:
+				counter=0
+				#print("Pos ",pos," Row ",inserted_row)
+				pos_diag=self.pos
+				for i in range(self.inserted_row,-1,-1):	#45-degree diagonal right
+					if(pos_diag<7 and self.a[i][pos_diag]==self.player):
+						pos_diag+=1
+						counter+=1
+						#print("hi")
+						#print("45 deg",counter)
+					else:
+						break
+				#print("counter after 1st for loop",counter)
+				pos_diag=self.pos-1
+				for i in range(self.inserted_row+1,6):	#45-degree diagonal left
+					#print("row ",i," column ",pos_diag)
+
+					#print("pos_diag","player",self.a[i][pos_diag],self.player)
+					if(pos_diag>=0 and self.a[i][pos_diag]==self.player ):
+						pos_diag-=1
+						counter+=1
+						#print("45 deg",counter)
+					else:
+						break
 				
-				return True
+				if(counter>=4):
+					print("Player ",self.player," won : NEG_DIAG")
+					#exit(0)
+					
+					return True
+
+				else:
+					counter=0
+					#print("Pos ",pos," Row ",inserted_row)
+					pos_diag=self.pos
+					for i in range(self.inserted_row,-1,-1):	#135-degree diagonal left
+						if( pos_diag>=0 and self.a[i][pos_diag]==self.player):
+							pos_diag-=1
+							counter+=1
+							#print("hi")
+							#print("135",counter)
+						else:
+							break
+					#print("counter after 1st for loop",counter)
+					pos_diag=self.pos+1
+					for i in range(self.inserted_row+1,6):	#135-degree diagonal right
+						#print("row ",i," column ",pos_diag)
+						if(pos_diag<7 and  self.a[i][pos_diag]==self.player ):
+							pos_diag+=1
+							counter+=1
+							#print("135",counter)
+						else:
+							break
+					#print("135 deg",counter)
+					if(counter>=4):
+						print("Player ",self.player," won : NEG_DIAG")
+						#exit(0)
+						
+						return True
 		return False
 		
 	

@@ -2,7 +2,7 @@
 
 from tkinter import *
 from ConnectFour import ConnectFour
-from arena1 import Boardposs
+from gui_arena import Boardposs
 
 class GUI:
     elementSize = 50
