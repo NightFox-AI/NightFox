@@ -1,7 +1,6 @@
 #! /usr/bin/env python3
 
 from tkinter import *
-from ConnectFour import ConnectFour
 from gui_arena import Boardposs
 
 class GUI:
