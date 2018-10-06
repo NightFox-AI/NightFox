@@ -112,4 +112,3 @@ if(__name__=="__main__"):
 		pos = int(pos)
 		ip=change_vals(bObj,pos,player)
 		check_for_win(bObj,pos,player)
-
