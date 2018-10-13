@@ -11,4 +11,4 @@ class Boardpos:
 #		self.th=0
 #		self.fr=0
 #		self.ftb=0
-#
+#		sefl.fblk=0
