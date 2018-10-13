@@ -7,13 +7,13 @@
 
 
 
-# 10 points if a dual case occurs(5+5)
+# 100 points if a dual case occurs(5+5)
 # -10 for each occurence of 3 dots together unnoticed by opponent but missed by the player.
 # -5 if the player facilitates the opponent by not blocking the winning chance.
-#  5 if a player blocks the three occurance of other player
+#  20 if a player blocks the three occurance of other player
 # 2 for three consecutive dots
-# 5 for each four consecutive dots(ie the player won)
-# 3 points for the player if he blocks the opponent with 3 consecutive dots
+# 50 for each four consecutive dots(ie the player won)
+# 20 points for the player if he blocks the opponent with 3 consecutive dots
 # 7 points if the player won with 5 consecutive dots (rare chance)  (optional)
 
 # please add more if u feel like doing so.
@@ -42,7 +42,7 @@ def referee(move, e):
 		move.fr=four(move,1,2)
 		move.th=three(move,1,2)
 		#move.tw=two(move,1,2)
-		move.ftb=failtoblock(move,1,2)
+		move.ftb=block(move,1,2)
 	if(e==2):
 		move.du=dual(move,2,1)
 		move.fr=four(move,2,1)
@@ -51,7 +51,7 @@ def referee(move, e):
 		move.ftb=block(move,2,1)	 
 
 	fitness=0
-	fitness=pow(5,move.ftb)+pow(-5,move.ftb)+pow(2,move.th)+pow(3,move.tw)
+	fitness=pow(20,move.ftb)+pow(50,move.fr)+pow(2,move.th)+pow(100,move.du)
 	# playerObj2.fitness=pow(5,playerObj2.ftb)+pow(-5,playerObj1.ftb)+pow(2,playerObj2.th)+pow(3,playerObj2.tw)
 	return fitness
 
