@@ -13,15 +13,16 @@ import boardpos
 import movemaker
 import ga2.gaDisc as gad
 
+import random
 
 if(__name__ == "__main__"):
 
     # Details on training flags
-    NUM_OF_TRAINING_EPOCH = 100
+    NUM_OF_TRAINING_EPOCH = 1
 
 
     # Details on the ga2 agents
-    NUMBER_OF_AGENTS = 10
+    NUMBER_OF_AGENTS = 2
     NUMBER_OF_PARAM = 50
     SPREAD = 1
     SURVIVAL_RATE = 0.02
@@ -65,28 +66,27 @@ if(__name__ == "__main__"):
 
                     # start of the game
                     # initialise the variables
-
+            
                     gameOver = False
                     gameTree = gametree.Tree()
                     board = boardpos.Boardpos()
-
+                    i = 0
                     # make this 'not' gameOver when the sub-modules are working
-                    while(gameOver):
-                        
+                    while(not gameOver):
+                        i += 1
                         move = movemaker.move(playerObj1, gameTree)
-                        # gameOver = arena.change_vals(board, move, 1)
-                        playerObj1.fitness = referee.referee(board, playerObj1, 1)
+                        gameOver = arena.change_vals(board, move, 1)
+                        #playerObj1.fitness = referee.referee(board, playerObj1, 1)
 
-                        
                         if(not gameOver):
                             move = movemaker.move(playerObj2, gameTree)
-                            # gameOver = arena.change_vals(board, move, 2)
-                            playerObj2.fitness = referee.referee(board, playerObj2, 2)
-                            
-                            
+                            gameOver = arena.change_vals(board, move, 2)
+                            #playerObj2.fitness = referee.referee(board, playerObj2, 2)
+
                     sess.updateAgent(playerObj1)
                     sess.updateAgent(playerObj2)
                     
+            
         trainEp += 1
         
         print("")

@@ -7,8 +7,9 @@ def change_vals(bObj,pos,player):
 			#print("hello",inserted_row)
 			break
 		elif(bObj.a[0][pos]==1):
-			print("Invalid")
-			break
+                        print("Invalid")
+                        return(True)
+	check_for_win(bObj,pos,player)
 	print("\nThe format is ")
 	print(" 0  1  2  3  4  5  6")
 	for i in range(0,6):

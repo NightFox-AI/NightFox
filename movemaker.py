@@ -1,2 +1,3 @@
+import random
 def move(playerObj, gameTree):
-    pass
+    return(random.randint(0, 6))
