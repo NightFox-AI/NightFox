@@ -41,16 +41,16 @@ def referee(move, e):
 		move.du=dual(move,1,2)
 		move.fr=four(move,1,2)
 		move.th=three(move,1,2)
-		move.fblk=three(move,2,1)
+		move.fblk=block(move,2,0)
 		#move.tw=two(move,1,2)
-		move.ftb=block(move,1,2)
+		move.ftb=block(move,2,1)
 	if(e==2):
 		move.du=dual(move,2,1)
 		move.fr=four(move,2,1)
 		move.th=three(move,2,1)
-		move.fblk=three(move,1,2)
+		move.fblk=block(move,1,0)
 		#move.tw=two(move,2,1)
-		move.ftb=block(move,2,1)	 
+		move.ftb=block(move,1,2)	 
 
 	fitness=0
 	fitness=pow(20,move.ftb)+pow(50,move.fr)+pow(2,move.th)+pow(100,move.du)+pow(-10,move.fblk)
