@@ -12,8 +12,9 @@ def change_vals(bObj,pos,player):
         result = check_for_win(bObj,pos,player)
         print("\nThe format is ")
         print(" 0  1  2  3  4  5  6")
-        for i in range(0,6):
-                print(bObj.a[i])
+        if(result):
+                for i in range(0,6):
+                        print(bObj.a[i])
         return(result)
 
 	
