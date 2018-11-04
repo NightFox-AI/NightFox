@@ -1,19 +1,20 @@
 def change_vals(bObj,pos,player):
-	global inserted_row
-	for i in range(5,-1,-1):
-		if(bObj.a[i][pos]==0):
-			bObj.a[i][pos]=player
-			inserted_row = i
-			#print("hello",inserted_row)
-			break
-		elif(bObj.a[0][pos]==1):
+        global inserted_row
+        for i in range(5,-1,-1):
+                if(bObj.a[i][pos]==0):
+                        bObj.a[i][pos]=player
+                        inserted_row = i
+                        #print("hello",inserted_row)
+                        break
+                elif(bObj.a[0][pos]==1):
                         print("Invalid")
                         return(True)
-	check_for_win(bObj,pos,player)
-	print("\nThe format is ")
-	print(" 0  1  2  3  4  5  6")
-	for i in range(0,6):
-		print(bObj.a[i])
+        result = check_for_win(bObj,pos,player)
+        print("\nThe format is ")
+        print(" 0  1  2  3  4  5  6")
+        for i in range(0,6):
+                print(bObj.a[i])
+        return(result)
 
 	
 
@@ -104,12 +105,14 @@ def check_for_win(bObj,pos,player):
 
 
 if(__name__=="__main__"):
-	import Boardpos
-	bObj = Boardpos.Boardpos()
-	while(1):
-		print("Player 	Position")
-		player, pos = input().split(" ")
-		player = int(player)
-		pos = int(pos)
-		ip=change_vals(bObj,pos,player)
-		check_for_win(bObj,pos,player)
+        import boardpos
+        bObj = boardpos.Boardpos()
+        ip = False
+        while( not ip):
+                print("Player 	Position")
+                player, pos = input().split(" ")
+                player = int(player)
+                pos = int(pos)
+                ip=change_vals(bObj,pos,player)
+                check_for_win(bObj,pos,player)
+                print("Value returned is ", ip)
