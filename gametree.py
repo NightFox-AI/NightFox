@@ -32,40 +32,66 @@ class TreeNode():
                     if(newBoardPos.a[i][element] == 0):
                         newBoardPos.a[i][element] = player
                         break
+                    
+                rate(newBoardPos, player)
+                rate(newBoardPos, toggle(player))
                 self.children.append(TreeNode(boardpos=newBoardPos,
                                               parent=self))
             if(count == 7):
                 self.endPos = True
 
-class Tree():
-    """
-    This is the game tree class
-    """
-    def __init__(self, root=TreeNode(parent=None)):
-        self.root = root
-        self.depth = 1
+def rate(boardPos, player):
+    return(0)
+                
+def toggle(t):
+    if(t == 1):
+        return(2)
+    elif(t == 2):
+        return(1)
+    else:
+        return(t)
 
-    def resetRoot(self, treeNode):
-        pass
-        
-    def generateTrees(self, tree, plankNo):
+def makeTree(root, player, plank):
 
-        while(self.depth < plankNo):
-            break
-        
+    if(plank == 0):
+        return()
+
+    else:
+        root.generateChildren(player)
+        for child in root.children:
+            makeTree(child, toggle(player), plank-1)
             
-        
-        
+def printTree(root):
 
+    if(root is None):
+        return
+    
+    for row in root.boardpos.a:
+        print(row)
+    print()
 
-
+    for child in root.children:
+        printTree(child)
+            
     
 if(__name__ == "__main__"):
 
-    node = TreeNode(parent = None)
-    node.generateChildren(1)
+    root = TreeNode(parent = None)
 
-    for child in node.children:
-        for row in child.boardpos.a:
-            print(row)
-        print()
+    makeTree(root, 1, 2)
+    printTree(root)
+    
+    # node = TreeNode(parent = None)
+    # node.generateChildren(1)
+
+    # for child in node.children:
+    #     for row in child.boardpos.a:
+    #         print(row)
+    #     print()
+
+    # node.children[0].generateChildren(2)
+
+    # for child in node.children[0].children:
+    #     for row in child.boardpos.a:
+    #         print(row)
+    #     print()
