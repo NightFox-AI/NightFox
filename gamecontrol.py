@@ -18,7 +18,7 @@ import random
 if(__name__ == "__main__"):
 
     # Details on training flags
-    NUM_OF_TRAINING_EPOCH = 20
+    NUM_OF_TRAINING_EPOCH = 100
 
 
     # Details on the ga2 agents
@@ -64,14 +64,10 @@ if(__name__ == "__main__"):
                 
                 if(player1ID != player2ID):
 
-                    # start of the game
-                    # initialise the variables
-            
                     gameOver = False
                     gameTree = gametree.Tree()
                     board = boardpos.Boardpos()
                     i = 0
-                    # make this 'not' gameOver when the sub-modules are working
                     while(not gameOver):
                         i += 1
                         move = movemaker.move(playerObj1, gameTree)
