@@ -65,20 +65,23 @@ if(__name__ == "__main__"):
                 if(player1ID != player2ID):
 
                     gameOver = False
-                    gameTree = gametree.Tree()
+                    root = gametree.TreeNode(parent=None)
                     board = boardpos.Boardpos()
-                    i = 0
+                    player = 1
                     while(not gameOver):
-                        i += 1
-                        move = movemaker.move(playerObj1, gameTree)
-                        gameOver = arena.change_vals(board, move, 1)
-                        playerObj1.fitness = referee.referee(board,  1)
+                        move = movemaker.move(playerObj1, root)
+                        gameOver = arena.change_vals(board, move, player)
+                        playerObj1.fitness = referee.referee(board,  player)
 
+                        player = gametree.toggle(player)
+                        
                         if(not gameOver):
-                            move = movemaker.move(playerObj2, gameTree)
-                            gameOver = arena.change_vals(board, move, 2)
-                            playerObj2.fitness = referee.referee(board,  2)
+                            move = movemaker.move(playerObj2, root)
+                            gameOver = arena.change_vals(board, move, player)
+                            playerObj2.fitness = referee.referee(board,  player)
 
+                            player = gametree.toggle(player)
+                            
                     sess.updateAgent(playerObj1)
                     sess.updateAgent(playerObj2)
                     
