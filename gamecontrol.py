@@ -1,10 +1,3 @@
-# This takes insanely large amount of time as this
-# this is of the order n^2 and thus all the agents have
-# to be updated. Possible solutions can be to parallelse
-# these ?. The game playing ?, let us see what we can do
-# a lot depends on how good sriniketh's fitness function
-# is.
-
 import time
 import arena
 import referee
@@ -17,11 +10,9 @@ import random
 
 if(__name__ == "__main__"):
 
-    # Details on training flags
     NUM_OF_TRAINING_EPOCH = 100
 
 
-    # Details on the ga2 agents
     NUMBER_OF_AGENTS = 10
     NUMBER_OF_PARAM = 50
     SPREAD = 1
@@ -32,7 +23,6 @@ if(__name__ == "__main__"):
     MODE = 'UNSAFE'
     VAL_TYPE = 'FLOAT'
 
-    # Initialisation of the modules
     sess = gad.Session(agentCount=NUMBER_OF_AGENTS,
                        numParam=NUMBER_OF_PARAM,
                        spread=SPREAD,
@@ -45,15 +35,8 @@ if(__name__ == "__main__"):
 
     sess.init()
     
-    # start training
     trainEp = 0
     while(trainEp < NUM_OF_TRAINING_EPOCH):
-
-        # One set of tournament starts
-        # each agent plays with another agent in
-        # the current generation twice.
-        # total number of plays per tournament
-        # is numOfAgents^2. (phew this will take long)
 
         currGen = sess.getAllAgents()
         for player1ID in currGen:

@@ -1,14 +1,7 @@
-"""
-This is the game tree class
-"""
 import copy
 import boardpos
 
 class TreeNode():
-    """
-    Each node in the game tree is an object
-    of this class
-    """
     def __init__(self, parent, boardpos=boardpos.Boardpos()):
         self.parent = parent
         self.children = []
@@ -40,6 +33,17 @@ class TreeNode():
             if(count == 7):
                 self.endPos = True
 
+    def makeTree(root, player, plank):
+
+        if(plank == 0):
+            return()
+        
+        else:
+            root.generateChildren(player)
+            for child in root.children:
+                makeTree(child, toggle(player), plank-1)
+
+                
 def rate(boardPos, player):
     return(0)
                 
@@ -50,16 +54,6 @@ def toggle(t):
         return(1)
     else:
         return(t)
-
-def makeTree(root, player, plank):
-
-    if(plank == 0):
-        return()
-
-    else:
-        root.generateChildren(player)
-        for child in root.children:
-            makeTree(child, toggle(player), plank-1)
             
 def printTree(root):
 
@@ -80,18 +74,3 @@ if(__name__ == "__main__"):
 
     makeTree(root, 1, 2)
     printTree(root)
-    
-    # node = TreeNode(parent = None)
-    # node.generateChildren(1)
-
-    # for child in node.children:
-    #     for row in child.boardpos.a:
-    #         print(row)
-    #     print()
-
-    # node.children[0].generateChildren(2)
-
-    # for child in node.children[0].children:
-    #     for row in child.boardpos.a:
-    #         print(row)
-    #     print()
