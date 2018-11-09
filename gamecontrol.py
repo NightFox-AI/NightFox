@@ -10,10 +10,8 @@ import random
 
 if(__name__ == "__main__"):
 
-    NUM_OF_TRAINING_EPOCH = 100
-
-
-    NUMBER_OF_AGENTS = 10
+    NUM_OF_TRAINING_EPOCH = 1
+    NUMBER_OF_AGENTS = 2
     NUMBER_OF_PARAM = 50
     SPREAD = 1
     SURVIVAL_RATE = 0.02
@@ -23,6 +21,8 @@ if(__name__ == "__main__"):
     MODE = 'UNSAFE'
     VAL_TYPE = 'FLOAT'
 
+    PLANK_DEPTH = 3
+    
     sess = gad.Session(agentCount=NUMBER_OF_AGENTS,
                        numParam=NUMBER_OF_PARAM,
                        spread=SPREAD,
@@ -48,23 +48,30 @@ if(__name__ == "__main__"):
                 if(player1ID != player2ID):
 
                     gameOver = False
-                    root = gametree.TreeNode(parent=None)
-                    board = boardpos.Boardpos()
                     player = 1
+                    root = gametree.TreeNode(parent=None, player=player)
+                    root.makeTree(PLANK_DEPTH)
+                    board = boardpos.Boardpos()
                     while(not gameOver):
-                        move = movemaker.move(playerObj1, root)
-                        gameOver = arena.change_vals(board, move, player)
-                        playerObj1.fitness = referee.referee(board,  player)
+                        oldpos = root.boardpos
+                        move, root = movemaker.move(playerObj1, root)
+                        gameOver = arena.change_vals(oldpos, move, player)
+                        playerObj1.fitness = referee.referee(root.boardpos,  player)
 
                         player = gametree.toggle(player)
                         
                         if(not gameOver):
-                            move = movemaker.move(playerObj2, root)
-                            gameOver = arena.change_vals(board, move, player)
-                            playerObj2.fitness = referee.referee(board,  player)
-
+                            oldpos = root.boardpos
+                            move, root = movemaker.move(playerObj2, root)
+                            gameOver = arena.change_vals(oldpos, move, player)
+                            playerObj2.fitness = referee.referee(root.boardpos,  player)
+                            if(gameOver):
+                                print("Agent {} won with fitness {}".format(playerObj2.agentID, playerObj2.fitness))
+                                print("Agent {} fitness {}".format(playerObj1.agentID, playerObj1.fitness))
                             player = gametree.toggle(player)
-                            
+                        else:
+                            print("Agent {} won with fitness {}".format(playerObj1.agentID, playerObj1.fitness))
+                            print("Agent {} fitness {}".format(playerObj2.agentID, playerObj2.fitness))
                     sess.updateAgent(playerObj1)
                     sess.updateAgent(playerObj2)
                     
