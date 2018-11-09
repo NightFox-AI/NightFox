@@ -1,4 +1,7 @@
-def change_vals(bObj,pos,player):
+import copy
+
+def change_vals(bObjin,pos,player):
+        bObj = copy.deepcopy(bObjin)
         global inserted_row
         for i in range(5,-1,-1):
                 if(bObj.a[i][pos]==0):
@@ -10,8 +13,8 @@ def change_vals(bObj,pos,player):
                         print("Invalid")
                         return(True)
         result = check_for_win(bObj,pos,player)
-        print("\nThe format is ")
-        print(" 0  1  2  3  4  5  6")
+        # print("\nThe format is ")
+        # print(" 0  1  2  3  4  5  6")
         if(result):
                 for i in range(0,6):
                         print(bObj.a[i])
