@@ -99,8 +99,8 @@ def block(move,e,f):
 						if (i+2<6)and(j-2>=0)and (move.a[i+2][j-2]==e):
 							if ((i+3<6)and(j-3>=0)and(move.a[i+3][j-3]==f)) :
 								count=count+1				
-	print("fail to block")							
-	print(count)
+	# print("fail to block")							
+	# print(count)
 	return (count);
 
 def four(move,e,f):
@@ -123,7 +123,7 @@ def four(move,e,f):
 				if (i-1>=0)and(move.a[i-1][j]==e):       #vertical
 						if (i-2>=0)and (move.a[i-2][j]==e):
 							if ((i-3>=0)and(move.a[i-3][j]==e)):#or(((i+1<6)and(move.a[i+1][j]==e) )) :
-								print(i,j)
+								#print(i,j)
 								count=count+1
 					 
 				if (i-1>=0)and(j-1>=0)and(move.a[i-1][j-1]==e):  #principle diagonal       above
@@ -146,8 +146,8 @@ def four(move,e,f):
 						if (i+2<6)and(j-2>=0)and (move.a[i+2][j-2]==e):
 							if ((i+3<6)and(j-3>=0)and(move.a[i+3][j-3]==e)) :
 								count=count+1				
-	print("the no of 4 cases are")
-	print(count)
+	# print("the no of 4 cases are")
+	# print(count)
 	return(count)							
 def three(move,e,f):
 	count=0
@@ -212,8 +212,8 @@ def three(move,e,f):
 								# print(i,j)
 								
 								
-	print("the no of 3 cases are")
-	print(count)
+	# print("the no of 3 cases are")
+	# print(count)
 	return(count)							
 
 def dual(move,e,f):
@@ -259,7 +259,7 @@ def dual(move,e,f):
 								# print(i,j)
 
 								
-	print(count)
+	# print(count)
 	return (count);
 
 
