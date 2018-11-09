@@ -1,18 +1,19 @@
 import copy
+import movemaker
 import boardpos
 
 class TreeNode():
-    def __init__(self, parent, boardpos=boardpos.Boardpos()):
+    def __init__(self, parent, player, boardpos=boardpos.Boardpos()):
         self.parent = parent
         self.children = []
-        self.boardpos = boardpos
-        self.pl1 = 0
-        self.pl2 = 0
-        self.leaf = False
+        self.boardpos = copy.deepcopy(boardpos)
+        self.player = player
+        self.leaf = True
         self.endPos = False
-        
-    def generateChildren(self, player):
 
+        
+    def generateChildren(self):
+        
         count = 0
         for element in range(len(self.boardpos.a[0])):
             if(self.boardpos.a[0][element] != 0):
@@ -23,30 +24,38 @@ class TreeNode():
                 newBoardPos.a = copy.deepcopy(self.boardpos.a)
                 for i in range(5, -1, -1):
                     if(newBoardPos.a[i][element] == 0):
-                        newBoardPos.a[i][element] = player
+                        newBoardPos.a[i][element] = self.player
                         break
-                    
-                rate(newBoardPos, player)
-                rate(newBoardPos, toggle(player))
-                self.children.append(TreeNode(boardpos=newBoardPos,
+                
+                rate(newBoardPos, self.player)
+                rate(newBoardPos, toggle(self.player))
+                self.children.append(TreeNode(player=toggle(self.player), boardpos=newBoardPos,
                                               parent=self))
-            if(count == 7):
+                
+            if(count >= 7):
                 self.endPos = True
+            else:
+                self.leaf = False
 
-    def makeTree(root, player, plank):
+                
+    def makeTree(self, plank):
 
         if(plank == 0):
-            return()
+            self.leaf = True
         
+        elif(not self.endPos):
+            self.leaf = False
+            self.generateChildren()
+            for child in self.children:
+                child.makeTree(plank-1)
         else:
-            root.generateChildren(player)
-            for child in root.children:
-                makeTree(child, toggle(player), plank-1)
-
+            self.leaf = True
+                
                 
 def rate(boardPos, player):
     return(0)
-                
+  
+
 def toggle(t):
     if(t == 1):
         return(2)
@@ -54,12 +63,24 @@ def toggle(t):
         return(1)
     else:
         return(t)
-            
+
+
+def printB(root):
+    print("This is board")
+    if(not root.leaf):
+        for row in root.boardpos.a:
+            print(row)
+        print()
+    else:
+        print("Empty")
+
+
 def printTree(root):
 
     if(root is None):
         return
-    
+
+    print(root.endPos, root.leaf)
     for row in root.boardpos.a:
         print(row)
     print()
@@ -70,7 +91,7 @@ def printTree(root):
     
 if(__name__ == "__main__"):
 
-    root = TreeNode(parent = None)
-
-    makeTree(root, 1, 2)
+    root = TreeNode(parent = None, player = 1)
+    root.generateChildren()
+    val, root = movemaker.move(10, root)
     printTree(root)
