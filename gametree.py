@@ -1,6 +1,7 @@
 import copy
 import movemaker
 import boardpos
+import referee
 
 class TreeNode():
     def __init__(self, parent, player, boardpos=boardpos.Boardpos()):
@@ -10,7 +11,7 @@ class TreeNode():
         self.player = player
         self.leaf = True
         self.endPos = False
-
+        rate(self.boardpos, self.player)
         
     def generateChildren(self):
         
@@ -27,8 +28,8 @@ class TreeNode():
                         newBoardPos.a[i][element] = self.player
                         break
                 
-                rate(newBoardPos, self.player)
-                rate(newBoardPos, toggle(self.player))
+                # rate(newBoardPos, self.player)
+                # print("New players are ", newBoardPos.players)
                 self.children.append(TreeNode(player=toggle(self.player), boardpos=newBoardPos,
                                               parent=self))
                 
@@ -53,8 +54,8 @@ class TreeNode():
                 
                 
 def rate(boardPos, player):
-    return(0)
-  
+    referee.referee(boardPos, player)
+
 
 def toggle(t):
     if(t == 1):
@@ -87,8 +88,8 @@ def printTree(root):
 
     for child in root.children:
         printTree(child)
-            
-    
+
+
 if(__name__ == "__main__"):
 
     root = TreeNode(parent = None, player = 1)
