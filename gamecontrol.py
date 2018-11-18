@@ -1,5 +1,6 @@
 import time
 import arena
+import pickle
 import referee
 import gametree
 import boardpos
@@ -8,21 +9,21 @@ import ga2.gaDisc as gad
 
 import random
 
-if(__name__ == "__main__"):
 
-    NUM_OF_TRAINING_EPOCH = 1
-    NUMBER_OF_AGENTS = 2
-    NUMBER_OF_PARAM = 50
-    SPREAD = 1
-    SURVIVAL_RATE = 0.02
-    MUTATION_RATE = 0.03
-    GENE_COPY = 0.95
-    GEN_MODE = 'A'
-    MODE = 'UNSAFE'
-    VAL_TYPE = 'FLOAT'
+NUM_OF_TRAINING_EPOCH = 10
+NUMBER_OF_AGENTS = 5
+NUMBER_OF_PARAM = 10
+SPREAD = 1
+SURVIVAL_RATE = 0.02
+MUTATION_RATE = 0.1
+GENE_COPY = 0.95
+GEN_MODE = 'A'
+MODE = 'UNSAFE'
+VAL_TYPE = 'FLOAT'
 
-    PLANK_DEPTH = 3
-    
+PLANK_DEPTH = 3
+
+if(__name__=="__main__"):
     sess = gad.Session(agentCount=NUMBER_OF_AGENTS,
                        numParam=NUMBER_OF_PARAM,
                        spread=SPREAD,
@@ -32,12 +33,13 @@ if(__name__ == "__main__"):
                        generateMode=GEN_MODE,
                        mode=MODE,
                        valType=VAL_TYPE)
-
+    
     sess.init()
     
     trainEp = 0
+    gameID = 0
     while(trainEp < NUM_OF_TRAINING_EPOCH):
-
+        
         currGen = sess.getAllAgents()
         for player1ID in currGen:
             for player2ID in currGen:
@@ -46,7 +48,7 @@ if(__name__ == "__main__"):
                 playerObj2 = sess.getAgent(player2ID)
                 
                 if(player1ID != player2ID):
-
+                    print("GAME {}".format(gameID))
                     gameOver = False
                     player = 1
                     root = gametree.TreeNode(parent=None, player=player)
@@ -54,28 +56,30 @@ if(__name__ == "__main__"):
                     board = boardpos.Boardpos()
                     while(not gameOver):
                         oldpos = root.boardpos
-                        move, root = movemaker.move(playerObj1, root)
+                        move, root = movemaker.move(playerObj1, root, player)
                         gameOver = arena.change_vals(oldpos, move, player)
-                        playerObj1.fitness = referee.referee(root.boardpos,  player)
-
+                        playerObj1.fitness += referee.referee(root.boardpos,  player)
+                        
                         player = gametree.toggle(player)
                         
                         if(not gameOver):
                             oldpos = root.boardpos
-                            move, root = movemaker.move(playerObj2, root)
+                            move, root = movemaker.move(playerObj2, root, player)
                             gameOver = arena.change_vals(oldpos, move, player)
-                            playerObj2.fitness = referee.referee(root.boardpos,  player)
+                            playerObj2.fitness += referee.referee(root.boardpos,  player)
                             if(gameOver):
                                 print("Agent {} won with fitness {}".format(playerObj2.agentID, playerObj2.fitness))
                                 print("Agent {} fitness {}".format(playerObj1.agentID, playerObj1.fitness))
                             player = gametree.toggle(player)
+                            
                         else:
                             print("Agent {} won with fitness {}".format(playerObj1.agentID, playerObj1.fitness))
                             print("Agent {} fitness {}".format(playerObj2.agentID, playerObj2.fitness))
+                            
                     sess.updateAgent(playerObj1)
                     sess.updateAgent(playerObj2)
+                    gameID += 1
                     
-            
         trainEp += 1
         
         print("")
@@ -83,5 +87,9 @@ if(__name__ == "__main__"):
         print("Average fitness is      {}".format(sess.getAverageFitness()))
         print("maximum fitness is      {}".format(sess.getBestAgent().fitness))
         print("best agent agentID is   {}".format(sess.getBestAgent().agentID))
-        
         sess.createNextGen()
+
+    print("The best agent Dna is {}".format(sess.getBestAgent().dna))
+    fd = open("BAGENT.dna", 'wb')
+    pickle.dump(sess.getBestAgent(), fd)
+    fd.close()
