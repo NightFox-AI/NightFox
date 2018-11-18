@@ -30,4 +30,4 @@ if(__name__=="__main__"):
             gameOver = arena.change_vals(oldpos, move, player)
             player = gametree.toggle(player)
             if(gameOver):
-                print("Agent {} won with fitness {}".format(playerObj2.agentID, playerObj2.fitness))
+                print("Agent {} won with fitness {}".format(playerObj1.agentID, playerObj1.fitness))

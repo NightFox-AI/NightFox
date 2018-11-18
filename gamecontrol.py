@@ -41,6 +41,10 @@ if(__name__=="__main__"):
     while(trainEp < NUM_OF_TRAINING_EPOCH):
         
         currGen = sess.getAllAgents()
+        for player in currGen:
+            agent = sess.getAgent(player)
+            agent.fitness = 0
+            sess.updateAgent(agent)
         for player1ID in currGen:
             for player2ID in currGen:
 
@@ -88,7 +92,7 @@ if(__name__=="__main__"):
         print("maximum fitness is      {}".format(sess.getBestAgent().fitness))
         print("best agent agentID is   {}".format(sess.getBestAgent().agentID))
         sess.createNextGen()
-
+        
     print("The best agent Dna is {}".format(sess.getBestAgent().dna))
     fd = open("BAGENT.dna", 'wb')
     pickle.dump(sess.getBestAgent(), fd)

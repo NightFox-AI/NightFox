@@ -23,7 +23,7 @@ def change_vals(bObjin,pos,player):
                         print("Invalid")
                         return(True)
         result = check_for_win(bObj,pos,player)
-        if(1):
+        if(result):
                 print(" The format is ")
                 print(" 0  1  2  3  4  5  6")
                 for i in range(0,6):
