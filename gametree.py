@@ -37,7 +37,7 @@ class TreeNode():
                 self.endPos = True
             else:
                 self.leaf = False
-
+        # print("added 7 children")
                 
     def makeTree(self, plank):
 
@@ -45,6 +45,7 @@ class TreeNode():
             self.leaf = True
         
         elif(not self.endPos):
+            # print("Now at plank {}".format(plank))
             self.leaf = False
             self.generateChildren()
             for child in self.children:

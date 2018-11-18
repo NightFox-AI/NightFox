@@ -2,8 +2,8 @@ import numpy as np
 import random
 import gametree
 from gamecontrol import PLANK_DEPTH as pd
-
-INF = 1000000
+# print("pd is {}".format(pd))
+INF = 10000000000000
 
 def move(playerObj1, root, player):
     # print("FROM MOVEMAKER =====")
@@ -88,6 +88,7 @@ def addPlank(root):
     elif((root.leaf) and (not root.endPos)):
         root.generateChildren()
     else:
+        # print("Added {} children ".format(len(root.children)))
         for child in range(len(root.children)):
             root.children[child] = addPlank(root.children[child])
     return(root)

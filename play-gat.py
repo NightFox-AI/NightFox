@@ -7,7 +7,7 @@ import boardpos
 import movemaker
 import ga2.gaDisc as gad
 
-PLANK_DEPTH = 3
+PLANK_DEPTH = 5
 
 if(__name__=="__main__"):
     fd = open("BAGENT.dna", 'rb')

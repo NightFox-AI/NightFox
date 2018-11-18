@@ -21,9 +21,6 @@ import gametree as gt
 #import ga2.gaDisc as gad
 
 
-
-
-
 # class Boardpos:
 #     def __init__(self):
 #         self.a = [[0 for i in range(0,7)] for j in range(0,6)]
@@ -50,9 +47,12 @@ def referee(move, e):
 	move.players[o]['ftb']=block(move,e,0)
 
 	fitness=0
-	fitness=(-1000*move.players[e]['ftb'])+(1000*move.players[e]['fr'])+(500*move.players[e]['th'])+(100*move.players[e]['du'])+(1000*move.players[e]['fblk']) - ((-1000*move.players[o]['ftb'])+(1000*move.players[o]['fr'])+(500*move.players[o]['th'])+(100*move.players[o]['du'])+(1000*move.players[o]['fblk']))
+	fitness=(-100000*move.players[e]['ftb'])+(100000*move.players[e]['fr'])+(1000*move.players[e]['th'])+(100*move.players[e]['du'])+(50000*move.players[e]['fblk']) - 0.75*((-100000*move.players[o]['ftb'])+(1000000*move.players[o]['fr'])+(2000*move.players[o]['th'])+(100*move.players[o]['du'])+(10000*move.players[o]['fblk']))
 	# playerObj2.fitness=pow(5,playerObj2.ftb)+pow(-5,playerObj1.ftb)+pow(2,playerObj2.th)+pow(3,playerObj2.tw)
 	return fitness
+
+
+
 
 def block(move,e,f):
 	count=0
@@ -121,7 +121,7 @@ def four(move,e,f):
 			if move.a[i][j]== e:
 				if (j-1>=0)and(move.a[i][j-1]==e):   #horizontal
 						if (j-2>=0)and (move.a[i][j-2]==e):
-							if ((j-3>=0)and(move.a[i][j-3]==e)) :#or((j+1<7)and(move.a[i][j+1]==e) ):
+							if ((j-3>=0)and(move.a[i][j-3]==e)) or((j+1<7)and(move.a[i][j+1]==e) ):
 								count=count+1
 
 				if (i-1>=0)and(move.a[i-1][j]==e):       #vertical
@@ -174,47 +174,54 @@ def three(move,e,f):
 			if (move.a[i][j]==e):
 				if (j-1>=0)and(move.a[i][j-1]==e):   #horizontal
 							if ((j-2>=0)and(move.a[i][j-2]==e)):# or((j+2<7)and(move.a[i][j+1]==e) ):
-								count=count+1
+								if((j-3>=0)and(move.a[i][j-3] == 0)):
+									count =count+1
+								if((j+1 <7)and(move.a[i][j+1] == 0)):
+									count=count+1
 								# print("horizontal")
 								# print(i,j)
 								
 				if (i-1>=0)and(move.a[i-1][j]==e):       #vertical
 							if ((i-2>=0)and(move.a[i-2][j]==e)): #or(((i+2<6)and(move.a[i+1][j]==e) )) :
-								count=count+1
+								if((i-3>=0)and(move.a[i-3][j] == 0)):
+									count=count+1
 								# print("vertical")
 								# print(i,j)
 
 					 
 				if (i-1>=0)and(j-1>=0)and(move.a[i-1][j-1]==e):  #principle diagonal       above
 							if ((i-2>=0)and(j-2>=0)and(move.a[i-2][j-2]==e)) :
-								count=count+1
+								if((i-3>=0)and(j-3>=0)and(move.a[i-3][j-3]==0)):
+									count=count+1
+								if((i+1<6)and(j+1<7)and(move.a[i+1][j+1]==0)):
+									count=count+1
 								# print("principle diagonal above")
 								# print(i,j)
 								
-
-					 
+				'''
 				if (i+1<6)and(j+1<7)and(move.a[i+1][j+1]==e):       #principle diagonal below
 							if ((i+2<6)and(j+2<7)and(move.a[i-2][j-2]==e)) :
 								count=count+1	
 								# print("principle diagonal below")
 								# print(i,j)
-																
+				'''											
 
 				if (i-1>=0)and(j+1<7)and(move.a[i-1][j+1]==e):       #off diagonal above
 							if ((i-2>=0)and(j+2<7)and(move.a[i-2][j+2]==e)) :
-								count=count+1
+								if((i-3>=0)and(j+3<7)and(move.a[i-3][j+3]==0)):
+									count=count+1
+								if((i+1<6)and(j-1>=0)and(move.a[i+1][j-1])==0):
+									count=count+1
 								# print("off diagonal above")
 								# print(i,j)
 								
-								
-
-
+				'''
 				if (i+1<6)and(j-1>=0)and(move.a[i+1][j-1]==e):       #off diagonal below
 							if ((i+2<6)and(j-2>=0)and(move.a[i+2][j-2]==e)) :
 								count=count+1
 								# print("off diagonal below")
 								# print(i,j)
-								
+				'''			
 								
 	# print("the no of 3 cases are")
 	# print(count)
@@ -269,16 +276,18 @@ def dual(move,e,f):
 
 # c=Boardpos()							
 # referee(c,2)
+
 # class Temp():
 #         def __init__(self):
 #                 pass
 
 # tmp = Temp()
 # tmp.a=[[0,0,0,0,0,0,0],     #just for test pls comment out when doing the original
-#        [0,0,0,2,0,0,0],
+#        [0,0,0,0,0,1,0],
+#        [0,0,0,0,1,0,0],
 #        [0,0,0,1,0,0,0],
-#        [0,0,0,1,0,0,0],
-#        [0,0,0,1,0,0,0],
+#        [0,0,1,0,0,0,0],
 #        [0,0,0,0,0,0,0]]
 
-# print("blocked ", block(tmp, 1, 2))
+# print("blocked ", block(tmp, 1, 2)) 
+# print("three ", three(tmp, 1, 2)) 
