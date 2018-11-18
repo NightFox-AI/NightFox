@@ -1,2 +1,5 @@
 #to ignore python compiles files
 *.pyc
+
+#to ignore the temporary dna file
+*.dna
