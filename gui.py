@@ -67,14 +67,14 @@ class GUI:
         # Ask for players' names
         self.p1 = 'Blue'
         self.p2 = 'Red'
-
+        
         # Ask for grid size
         columns = 7
         rows = 6
         
         #self.game = ConnectFour(columns=columns, rows=rows)
         self.game = Boardposs()
-
+        
         self.canvas.delete(ALL)
         self.canvas.config(width=(self.elementSize)*self.game.size['c'],
                            height=(self.elementSize)*self.game.size['r'])

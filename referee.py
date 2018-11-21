@@ -32,33 +32,42 @@ import gametree as gt
 def referee(move, e):
     o = gt.toggle(e)
     move.players = dict()
-    move.players[e] = dict()
-    move.players[e]['du']=dual(move,e,o)
-    move.players[e]['fr']=four(move,e,o)
-    move.players[e]['th']=three(move,e,o)
-    move.players[e]['fblk']=block(move,o,e)
-    move.players[e]['ftb']=block(move,o,0) 
+    move.players[e] = []
+    move.players[e].append(dual(move,e,o))
+    move.players[e].append(four(move,e,o))
+    move.players[e].append(three(move,e,o))
+    if(move.players[e][2] > 1):
+        move.players[e].append(move.players[e][2] - 1)
+    else:
+        move.players[e].append(0)    
+    move.players[e].append(block(move,o,e))
+    move.players[e].append(block(move,o,0)) 
 
-    move.players[o] = dict()
-    move.players[o]['du']=dual(move,o,e)
-    move.players[o]['fr']=four(move,o,e)
-    move.players[o]['th']=three(move,o,e)
-    move.players[o]['fblk']=block(move,e,o)
-    move.players[o]['ftb']=block(move,e,0)
+    move.players[o] = []
+    move.players[o].append(dual(move,o,e))
+    move.players[o].append(four(move,o,e))
+    move.players[o].append(three(move,o,e))
+    if(move.players[o][2] > 1):
+        move.players[o].append(move.players[o][2] - 1)
+    else:
+        move.players[o].append(0)
+    move.players[o].append(block(move,e,o))
+    move.players[o].append(block(move,e,0))
 
     fitness=0
-    fitness=((-1000000000*move.players[e]['ftb'])+(100000*move.players[e]['fr'])+(10000*move.players[e]['th'])+(1000*move.players[e]['du'])+(50000*move.players[e]['fblk']))
-    '''- 0.75*((-100000*move.players[o]['ftb'])
-    +(1000000*move.players[o]['fr'])
-    +(2000*move.players[o]['th'])
-    +(100*move.players[o]['du'])
-    +(10000*move.players[o]['fblk']))
-    '''
+    fitness=(((0*move.players[e][5])
+              +((10**9)*move.players[e][1])
+              +((10**5)*move.players[e][2])
+              +((10**2)*move.players[e][0])
+              +((-10**10)*move.players[e][4]))
+             -((0*move.players[o][5])
+               +((-1*10**9)*move.players[o][1])
+               +((-1*10**5)*move.players[o][2])
+               +((-1*10**2)*move.players[o][0])
+               +((10**10)*move.players[o][4])))
+    
     # playerObj2.fitness=pow(5,playerObj2.ftb)+pow(-5,playerObj1.ftb)+pow(2,playerObj2.th)+pow(3,playerObj2.tw)
     return fitness
-
-
-
 
 def block(move,e,f):
     count=0
@@ -88,8 +97,8 @@ def block(move,e,f):
                         if (i-2>=0)and(j-2>=0)and (move.a[i-2][j-2]==e):
                             if ((i-3>=0)and(j-3>=0)and(move.a[i-3][j-3]==f)):
                                 count=count+1
-                        if ((i+1<6)and(j+1<7)and(move.a[i+1][j+1] == f)):
-                                 count=count+1
+                            if ((i+1<6)and(j+1<7)and(move.a[i+1][j+1] == f)):
+                                count=count+1
                 '''
                 if (i+1<6)and(j+1<7)and(move.a[i+1][j+1]==e):       #principle diagonal below
                         if (i+2<6)and(j+2<7)and (move.a[i-2][j-2]==e):
@@ -186,7 +195,11 @@ def three(move,e,f):
                                     count=count+1
                                 # print("horizontal")
                                 # print(i,j)
-                                
+                            elif((j-3>=0)and(move.a[i][j-2]==0)and(move.a[i][j-3]==e)):
+                                count += 1
+
+                            if((j+2<7)and(move.a[i][j+1]==0)and(move.a[i][j+2]==e)):
+                                count += 1
                 if (i-1>=0)and(move.a[i-1][j]==e):       #vertical
                             if ((i-2>=0)and(move.a[i-2][j]==e)): #or(((i+2<6)and(move.a[i+1][j]==e) )) :
                                 if((i-3>=0)and(move.a[i-3][j] == 0)):
@@ -201,6 +214,11 @@ def three(move,e,f):
                                     count=count+1
                                 if((i+1<6)and(j+1<7)and(move.a[i+1][j+1]==0)):
                                     count=count+1
+                            elif((i-3 >=0)and(j-3>=0)and(move.a[i-2][j-2]==0)and(move.a[i-3][j-3]==e)):
+                                count += 1
+
+                            if((i+2<6)and(j+2<7)and(move.a[i+1][j+1]==0)and(move.a[i+2][j+2]==e)):
+                                count += 1
                                 # print("principle diagonal above")
                                 # print(i,j)
                                 
@@ -218,6 +236,11 @@ def three(move,e,f):
                                     count=count+1
                                 if((i+1<6)and(j-1>=0)and(move.a[i+1][j-1])==0):
                                     count=count+1
+                            elif((i-3>=0)and(j+3<7)and(move.a[i-2][j+2]==0)and(move.a[i-3][j+3]==e)):
+                                count += 1
+
+                            if((i+2<6)and(j-2>=0)and(move.a[i+1][j-1]==0)and(move.a[i+2][j-2]==e)):
+                                count += 1
                                 # print("off diagonal above")
                                 # print(i,j)
                                 
@@ -245,35 +268,54 @@ def dual(move,e,f):
         for j in range(0,7):
             if move.a[i][j]== e:
                 if (j-1>=0)and(move.a[i][j-1]==e):   #horizontal
-                        if (j-2>=0)and (move.a[i][j-2]==e):
-                            if ((j-3>=0)and(move.a[i][j-3]==0))and ((j+1<7)and(move.a[i][j+1]==0) ):
-                                count=count+1
-                                # print("horizontal")
-                                # print(i,j)
+                        if (j-2>=0)and (move.a[i][j-2]==0):
+                            # if ((j-3>=0)and(move.a[i][j-3]==0))and ((j+1<7)and(move.a[i][j+1]==0) ):
+                            count=count+1
+                            # print("horizontal left")
+                        if (j+1<7)and (move.a[i][j+1]==0):
+                            count=count+1
+                            # print("horizontal right")
+                            # print(i,j)
 
                 if (i-1>=0)and(move.a[i-1][j]==e):       #vertical
-                        if (i-2>=0)and (move.a[i-2][j]==e):
-                            if ((i-3>=0)and(move.a[i-3][j]==0))and(((i+1<6)and(move.a[i+1][j]==0) )) :
-                                count=count+1
-                                # print("vertical")
-                                # print(i,j)
+                        if (i-2>=0)and (move.a[i-2][j]==0):
+                            # if ((i-3>=0)and(move.a[i-3][j]==0))and(((i+1<6)and(move.a[i+1][j]==0) )) :
+                            count=count+1
+                            # print("vertical")
+                            # print(i,j)
 
-                     
-                if (i-1>=0)and(j-1>=0)and(move.a[i-1][j-1]==e) and ((i+1<6)and(j+1<7)and((move.a[i+1][j+1]==e) or (move.a[i+1][j+1]==0))):  #principle diagonal       above
-                        #if (i+2<6)and(j+2<7)and (move.a[i+2][j+2]==e) and ((i-2>=0)and(j-2>=0)and (move.a[i-2][j-2]==0)) :     # as we are checking the middle elements in the diagonal
-                            if ((i-2>=0)and(j-2>=0)and(move.a[i-2][j-2]==0)) and ((i+2<6)and(j+2<7)and(move.a[i-2][j-2]==0)) :
-                                count=count+1
-                                # print("principle diagonal")
-                                # print(i,j)
+                if((i-1>=0)and(j-1>=0)and(move.a[i-1][j-1]==e)):
+                        if((i-2>=0)and(j-2>=0)and(move.a[i-2][j-2]==0)):
+                            count+=1
+                            # print("up neg diag")
+                        if((i+1<6)and(j+1<7)and(move.a[i+1][j+1]==0)):
+                            count+=1
+                            # print("down neg diag")
+
+
+                if((i-1>=0)and(j+1<7)and(move.a[i-1][j+1]==e)):
+                        if((i-2>=0)and(j+2<7)and(move.a[i-2][j+2]==0)):
+                            count+=1
+                            # print("up pos diag")
+                        if((i+1<6)and(j-1>=0)and(move.a[i+1][j-1]==0)):
+                            count+=1
+                            # print("down pos diag")   
+                            
+                # if (i-1>=0)and(j-1>=0)and(move.a[i-1][j-1]==e) and ((i+1<6)and(j+1<7)and((move.a[i+1][j+1]==e) or (move.a[i+1][j+1]==0))):  #principle diagonal       above
+                #         #if (i+2<6)and(j+2<7)and (move.a[i+2][j+2]==e) and ((i-2>=0)and(j-2>=0)and (move.a[i-2][j-2]==0)) :     # as we are checking the middle elements in the diagonal
+                #             if ((i-2>=0)and(j-2>=0)and(move.a[i-2][j-2]==0)) and ((i+2<6)and(j+2<7)and(move.a[i-2][j-2]==0)) :
+                #                 count=count+1
+                #                 # print("principle diagonal")
+                #                 # print(i,j)
 
                      
                 
-                if ((i-1>=0)and(j+1<7)and(move.a[i-1][j+1]==e)) and ((i+1<6)and(j-1>=0)and((move.a[i+1][j-1]==e)or(move.a[i+1][j-1]==0))):       #off diagonal above
-                        #if ((i-2>=0)and(j+2<7)and (move.a[i-2][j+2]==e)) and ((i+2<6)and(j-2>=0)and ((move.a[i+2][j-2]==e))):       # as we are checking the middle elements in the diagonal
-                            if ((i-2>=0)and(j+2<7)and(move.a[i-2][j+2]==0)) and (((i+2<6)and(j-2>=0)and(move.a[i+2][j-2]==0))) :
-                                count=count+1
-                                # print("off diagonal")
-                                # print(i,j)
+                # if ((i-1>=0)and(j+1<7)and(move.a[i-1][j+1]==e)) and ((i+1<6)and(j-1>=0)and((move.a[i+1][j-1]==e)or(move.a[i+1][j-1]==0))):       #off diagonal above
+                #         #if ((i-2>=0)and(j+2<7)and (move.a[i-2][j+2]==e)) and ((i+2<6)and(j-2>=0)and ((move.a[i+2][j-2]==e))):       # as we are checking the middle elements in the diagonal
+                #             if ((i-2>=0)and(j+2<7)and(move.a[i-2][j+2]==0)) and (((i+2<6)and(j-2>=0)and(move.a[i+2][j-2]==0))) :
+                #                 count=count+1
+                #                 # print("off diagonal")
+                #                 # print(i,j)
 
                                 
     # print(count)
@@ -283,17 +325,20 @@ def dual(move,e,f):
 # c=Boardpos()                            
 # referee(c,2)
 
-class Temp():
-        def __init__(self):
-                pass
+# class Temp():
+#         def __init__(self):
+#                 pass
 
-tmp = Temp()
-tmp.a=[[0,0,0,0,0,0,0],     #just for test pls comment out when doing the original
-       [0,0,0,0,0,1,0],
-       [0,0,0,0,1,0,0],
-       [0,0,0,1,0,0,0],
-       [0,0,1,0,0,0,0],
-       [0,0,0,0,0,0,0]]
+# tmp = Temp()
+# tmp.a=[[0,0,0,0,0,0,0],     #just for test pls comment out when doing the original
+#        [0,0,0,0,0,0,0],
+#        [0,0,0,0,0,0,0],
+#        [0,0,0,0,0,0,0],
+#        [0,0,0,0,0,0,0],
+#        [0,0,0,0,0,0,0]]
 
-print("blocked ", block(tmp, 1, 2)) 
-print("four ", dual(tmp, 1, 2)) 
+# print("ours not blocked ", block(tmp, 1, 0))
+# print("blocked ", block(tmp, 1, 2)) 
+# print("dual ", dual(tmp, 1, 2)) 
+# print("fours ", four(tmp, 1, 2))
+# print("Three ", three(tmp, 1, 2))
