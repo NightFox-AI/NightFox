@@ -12,14 +12,16 @@ from gamecontrol import PLANK_DEPTH as pd
 class Temp():
     def __init__(self):
         # self.dna = [1, 10**11, 10**3, 10**7, 10**9, -1*10**10, -1, -1*10**11, -1*10**3, -1*10**8, -1*10**9, 10**10]
-        self.dna = [1, 10**11, 10**5, 10**7, 0, 0, -1, -1*10**13, -1*10**5, -1*10**8, 0, 0]
+        self.dna = [1, 10**11, 10**5, 10**7, -1, -1*10**13, -1*10**5, -1*10**8]
+        # self.dna = [-i for i in self.dna1]
         self.fitness = 0
 
 
 if(__name__=="__main__"):
-    # fd = open("BAGENT.dna", 'rb')
+    # fd = open("EP-BAGENT.dna", 'rb')
     # playerObj1 = pickle.load(fd)
     # fd.close()
+    # print("Agent is ", playerObj1.dna)
     playerObj1 = Temp()
     fd = open("BAGENT.dna", 'wb')
     pickle.dump(playerObj1, fd)
@@ -38,6 +40,7 @@ if(__name__=="__main__"):
         if(not gameOver):
             oldpos = root.boardpos
             move, root = movemaker.move(playerObj1, root, player)
+            # move, root = movemaker.acceptmove(root, player)
             gameOver = arena.change_vals(oldpos, move, player)
             player = gametree.toggle(player)
             if(gameOver):

@@ -39,9 +39,9 @@ def referee(move, e):
     if(move.players[e][2] > 1):
         move.players[e].append(move.players[e][2] - 1)
     else:
-        move.players[e].append(0)    
-    move.players[e].append(block(move,o,e))
-    move.players[e].append(block(move,o,0)) 
+        move.players[e].append(0)
+    # move.players[e].append(block(move,o,e))
+    # move.players[e].append(block(move,o,0)) 
 
     move.players[o] = []
     move.players[o].append(dual(move,o,e))
@@ -51,20 +51,29 @@ def referee(move, e):
         move.players[o].append(move.players[o][2] - 1)
     else:
         move.players[o].append(0)
-    move.players[o].append(block(move,e,o))
-    move.players[o].append(block(move,e,0))
+    # move.players[o].append(block(move,e,o))
+    # move.players[o].append(block(move,e,0))
 
     fitness=0
-    fitness=(((0*move.players[e][5])
-              +((10**9)*move.players[e][1])
+    fitness=((+((10**11)*move.players[e][1])
               +((10**5)*move.players[e][2])
-              +((10**2)*move.players[e][0])
-              +((-10**10)*move.players[e][4]))
-             -((0*move.players[o][5])
-               +((-1*10**9)*move.players[o][1])
+              +((10**0)*move.players[e][0])
+              +((10**7)*move.players[e][3]))
+             -(((-1*10**13)*move.players[o][1])
                +((-1*10**5)*move.players[o][2])
-               +((-1*10**2)*move.players[o][0])
-               +((10**10)*move.players[o][4])))
+               +((-1*10**0)*move.players[o][0]))
+               +((-1*10**8)*move.players[o][3]))
+
+    # fitness=(((0*move.players[e][5])
+    #           +((10**9)*move.players[e][1])
+    #           +((10**5)*move.players[e][2])
+    #           +((10**2)*move.players[e][0])
+    #           +((-10**10)*move.players[e][4]))
+    #          -((0*move.players[o][5])
+    #            +((-1*10**9)*move.players[o][1])
+    #            +((-1*10**5)*move.players[o][2])
+    #            +((-1*10**2)*move.players[o][0])
+    #            +((10**10)*move.players[o][4])))
     
     # playerObj2.fitness=pow(5,playerObj2.ftb)+pow(-5,playerObj1.ftb)+pow(2,playerObj2.th)+pow(3,playerObj2.tw)
     return fitness

@@ -41,21 +41,7 @@ def move(playerObj1, root, player):
             # print("values are {}".format(worthc))
         else:
             pass
-            # worthc = []
-            # for pos, child in enumerate(root.children):
-            #     worthc.append(minimax(child, pd, -INF, INF, gametree.toggle(player), player, playerObj1, pos))
-            
-            # # print("worthc is {}".format(worthc))
-            # maxv = max(worthc)
-            # finc = [chld for chld in range(len(worthc)) if worthc[chld]==maxv]
-            # # print("finc is ", finc)
-            # val = random.choice(finc)
-            # # val = random.randint(0, len(root.children)-1)            
-            # if(root.children[val] is None):
-            #     print("WARNING !!!")
-            #     val = 0
-            #     while(root.children[val] is None):
-            #         val += 1
+
 
         root = root.children[val]
         root = addPlank(root)
@@ -73,7 +59,7 @@ def evaluation(playerObj, root, player):
     # for i in range(0,6):
     #     print(root.boardpos.a[i])
     
-    mixer = np.array(playerObj.dna).reshape(1, 12)
+    mixer = np.array(playerObj.dna).reshape(1, 8)
     res = np.ndarray.tolist((np.dot(mixer, np.array(list(root.boardpos.players[player]) + list(root.boardpos.players[gametree.toggle(player)])))))
     # print("RES IS {}".format(res))
     # res = referee.referee(root.boardpos, player)
@@ -130,11 +116,9 @@ def addPlank(root):
             root.children[child] = addPlank(root.children[child])
     return(root)
 
-def normalize(val):
-    return(1/(1+val))
 
-def acceptmove(root, player):
-    move = int(input("Your move ? : "))
+def acceptmove(root, move):
+    #move = int(input("Your move ? : "))
     root = root.children[move]
     addPlank(root)
     return(move, root)
