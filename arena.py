@@ -1,8 +1,14 @@
 import copy
 
+class GLOB():
+    def __init__(self):
+        self.inserted_row = 0
+
+glb = GLOB()
+
 def change_vals(bObjin,pos,player):
     bObj = copy.deepcopy(bObjin)
-    global inserted_row
+    # global inserted_row
 
     count = 0
     for dr in bObj.a[0]:
@@ -16,7 +22,7 @@ def change_vals(bObjin,pos,player):
     for i in range(5,-1,-1):
         if(bObj.a[i][pos]==0):
             bObj.a[i][pos]=player
-            inserted_row = i
+            glb.inserted_row = i
             #print("hello",inserted_row)
             break
         elif(bObj.a[0][pos]==1 or bObj.a[0][pos]==2):
@@ -24,7 +30,7 @@ def change_vals(bObjin,pos,player):
             return(True)
     
     result = check_for_win(bObj,pos,player)
-    if(1):
+    if(0):
         print(" The format is ")
         print(" 0  1  2  3  4  5  6")
         for i in range(0,6):
@@ -38,37 +44,37 @@ def check_for_win(bObjin,pos,player):
     
     counter=0
     for i in range(pos,-1,-1):    #left
-        if(bObj.a[inserted_row][i]==player):
+        if(bObj.a[glb.inserted_row][i]==player):
             counter+=1
         else:
             break
     for i in range(pos+1,7):    #right
-        if(bObj.a[inserted_row][i]==player):
+        if(bObj.a[glb.inserted_row][i]==player):
             counter+=1
         else:
             break
     if(counter>=4):
-        print("Player ",player," won : LEFT-RIGHT")
+        # print("Player ",player," won : LEFT-RIGHT")
         return True
 
     else:
         counter=0
-        for i in range(inserted_row,6):    #down
+        for i in range(glb.inserted_row,6):    #down
             if(bObj.a[i][pos]==player):
                 counter+=1
             else:
                 break
 
         if(counter>=4):
-            print("Player ",player," won : UP-DOWN")
+            # print("Player ",player," won : UP-DOWN")
             return True
 
 
         else:
             counter=0
-            #print("Pos ",pos," Row ",inserted_row)
+            #print("Pos ",pos," Row ",glb.inserted_row)
             pos_diag=pos
-            for i in range(inserted_row,-1,-1):    #45-degree diagonal right
+            for i in range(glb.inserted_row,-1,-1):    #45-degree diagonal right
                 if(pos_diag<7 and bObj.a[i][pos_diag]==player):
                     pos_diag+=1
                     counter+=1
@@ -78,7 +84,7 @@ def check_for_win(bObjin,pos,player):
                     break
             #print("counter after 1st for loop",counter)
             pos_diag=pos-1
-            for i in range(inserted_row+1,6):    #45-degree diagonal left
+            for i in range(glb.inserted_row+1,6):    #45-degree diagonal left
                 #print("row ",i," column ",pos_diag)
                 if(pos_diag>=0  and bObj.a[i][pos_diag]==player):
                     pos_diag-=1
@@ -87,15 +93,15 @@ def check_for_win(bObjin,pos,player):
                 else:
                     break
             if(counter>=4):
-                print("Player ",player," won : NEG_DIAG")
+                # print("Player ",player," won : NEG_DIAG")
                 return True
 
 
             else:
                 counter=0
-                #print("Pos ",pos," Row ",inserted_row)
+                #print("Pos ",pos," Row ",glb.inserted_row)
                 pos_diag=pos
-                for i in range(inserted_row,-1,-1):    #135-degree diagonal left
+                for i in range(glb.inserted_row,-1,-1):    #135-degree diagonal left
                     if(pos_diag>=0 and bObj.a[i][pos_diag]==player):
                         pos_diag-=1
                         counter+=1
@@ -106,7 +112,7 @@ def check_for_win(bObjin,pos,player):
                         break
                 #print("counter after 1st for loop",counter)
                 pos_diag=pos+1
-                for i in range(inserted_row+1,6):    #135-degree diagonal right
+                for i in range(glb.inserted_row+1,6):    #135-degree diagonal right
                     #print("row ",i," column ",pos_diag)
                     #print(pos_diag)
                     if(pos_diag<7 and bObj.a[i][pos_diag]==player ):
@@ -116,7 +122,7 @@ def check_for_win(bObjin,pos,player):
                     else:
                         break
                 if(counter>=4):
-                    print("Player ",player," won : NEG_DIAG")
+                    # print("Player ",player," won : NEG_DIAG")
                     return True
     return False
 

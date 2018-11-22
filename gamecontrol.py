@@ -10,12 +10,12 @@ import ga2.gaDisc as gad
 import random
 
 
-NUM_OF_TRAINING_EPOCH = 10
-NUMBER_OF_AGENTS = 5
-NUMBER_OF_PARAM = 10
-SPREAD = 1
+NUM_OF_TRAINING_EPOCH = 50
+NUMBER_OF_AGENTS = 10
+NUMBER_OF_PARAM = 8
+SPREAD = 10**11
 SURVIVAL_RATE = 0.4
-MUTATION_RATE = 0.1
+MUTATION_RATE = 0.2
 GENE_COPY = 0.90
 GEN_MODE = 'A'
 MODE = 'UNSAFE'
@@ -91,9 +91,15 @@ if(__name__=="__main__"):
         print("Average fitness is      {}".format(sess.getAverageFitness()))
         print("maximum fitness is      {}".format(sess.getBestAgent().fitness))
         print("best agent agentID is   {}".format(sess.getBestAgent().agentID))
+        fd = open("Stat.meta", 'a')
+        fd.write("\n\nEpoch "+str(trainEp)+" "+"Avg fitness is : "+str(sess.getAverageFitness()/10**10))
+        fd.write("\nEpoch "+str(trainEp)+" "+"best fitness is : "+str(sess.getBestAgent().fitness/10**10))
+        fd.close()
+        fd = open("EP-BAGENT.dna", 'wb')
+        pickle.dump(sess.getBestAgent(), fd)
+        fd.close()
         sess.createNextGen()
         
-    print("The best agent Dna is {}".format(sess.getBestAgent().dna))
     fd = open("BAGENT.dna", 'wb')
     pickle.dump(sess.getBestAgent(), fd)
     fd.close()
