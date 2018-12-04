@@ -3,6 +3,3 @@
 
 # To ignore the temporary dna file
 *.dna
-
-# To ignore the .meta files
-*.meta
