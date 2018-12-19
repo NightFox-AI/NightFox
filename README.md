@@ -18,7 +18,7 @@ $ git clone https://github.com/NightFox-AI/NightFox
 * Currently the replay option is shown but is not functional, please 
 re-run the python file to play.
 	``` $ python gui.py ```
-* To increase/decrease difficulty level, modify the **_pd_** parameter in  [gui.py]() python file.
+* To increase/decrease difficulty level, modify the **_pd_** parameter in  [gui.py](https://github.com/NightFox-AI/NightFox/blob/master/gui.py) python file.
 
 ## Contributions
 * Kind souls may send a Pull request with appropriate Bug fix/ New feature . Constructive contributions are appreciated.
