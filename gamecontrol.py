@@ -91,13 +91,6 @@ if(__name__=="__main__"):
         print("Average fitness is      {}".format(sess.getAverageFitness()))
         print("maximum fitness is      {}".format(sess.getBestAgent().fitness))
         print("best agent agentID is   {}".format(sess.getBestAgent().agentID))
-        fd = open("Stat.meta", 'a')
-        fd.write("\n\nEpoch "+str(trainEp)+" "+"Avg fitness is : "+str(sess.getAverageFitness()/10**10))
-        fd.write("\nEpoch "+str(trainEp)+" "+"best fitness is : "+str(sess.getBestAgent().fitness/10**10))
-        fd.close()
-        fd = open("EP-BAGENT.dna", 'wb')
-        pickle.dump(sess.getBestAgent(), fd)
-        fd.close()
         sess.createNextGen()
         
     fd = open("BAGENT.dna", 'wb')

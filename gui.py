@@ -10,6 +10,10 @@ import ga2
 import arena
 import movemaker
 
+# You can increase this number to increase the
+# expertise of the AI, default = 4
+pd = pd 
+
 class AgentClass():
     def __init__(self):
         self.dna = []
